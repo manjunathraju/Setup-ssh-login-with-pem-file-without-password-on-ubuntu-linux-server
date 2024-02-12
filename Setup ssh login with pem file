@@ -1,0 +1,54 @@
+Login to VPS with account user (not root)
+cd ~/.ssh
+
+mkdir pem
+
+cd pem
+
+ssh-keygen -b 2048 -f identity -t rsa
+
+Enter to leave passphare empty. It will gen 2 files in pem dir (identity and identity.pub)
+
+2. Copy public key contents to authorized_keys
+
+cat identity.pub >> ~/.ssh/authorized_keys
+
+Can check with
+
+nano ~/.ssh/authorized_keys
+
+3. Disable Password Authentication
+
+sudo nano /etc/ssh/sshd_config
+
+Update PasswordAuthentication from “yes” to “no” as below:
+
+# Change to no to disable tunnelled clear text passwords
+
+PasswordAuthentication no
+
+4. Restart SSH:
+
+sudo service ssh restart
+
+5. Download your private key to client side:
+
+Copy the contents of the file private key file identity on vps to a key file identity.pem on your local system, just copy and paste the data into a new file.
+
+cat ~/.ssh/pem/identity
+
+The content look like this:
+
+— — -BEGIN RSA PRIVATE KEY — — -
+
+……
+
+— — -END RSA PRIVATE KEY — — -
+
+6. Set permission for pem on your local:
+
+sudo chmod 600 identity.pem
+
+7. Test login:
+
+ssh -i identity.pem user@vps-ip

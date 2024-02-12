@@ -1,4 +1,4 @@
-Login to VPS with account user (not root)
+1 .Login to VPS with account user (not root)
 cd ~/.ssh
 
 mkdir pem
